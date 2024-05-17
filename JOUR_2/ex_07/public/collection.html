@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Collection</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Students in Progress</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+    </thead>
+    <tbody id="studentsTable">
+    </tbody>
+</table>
+
+<script>
+    async function fetchStudents() {
+        const response = await fetch('http://localhost:4242/api/students');
+        const students = await response.json();
+
+        const tableBody = document.getElementById('studentsTable');
+        tableBody.innerHTML = '';
+        students.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${student.lastname}</td>
+                    <td>${student.firstname}</td>
+                    <td>${student.email}</td>
+                    <td>${student.phone}</td>
+                `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    fetchStudents();
+</script>
+</body>
+</html>
